@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Thiago Coelho — Full Stack &amp; IA</title>
+
+<meta name="description" content="Portfólio de Thiago de Oliveira Coelho Souza — desenvolvedor Full Stack focado em Python, Django, FastAPI, React e sistemas com IA aplicada (RAG, LLMs, OCR).">
+<meta name="theme-color" content="#05060a">
+<meta name="author" content="Thiago de Oliveira Coelho Souza">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Thiago Coelho — Full Stack &amp; IA">
+<meta property="og:description" content="Oito sistemas em produção e pesquisa: RAG, OCR, matching com ML, digital signage e monitoramento climático por satélite.">
+<meta property="og:locale" content="pt_BR">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%2305060a'/><text y='.9em' x='50%25' text-anchor='middle' font-size='58' font-family='monospace' fill='%2322d3ee'>T</text></svg>">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<!-- ══════════ PRELOADER ══════════ -->
+<div class="preloader" id="preloader">
+  <div class="preloader__inner">
+    <div class="preloader__label">Inicializando ambiente</div>
+    <div class="preloader__bar"><span id="preloader-fill"></span></div>
+    <div class="preloader__count"><span id="preloader-count">0</span>%</div>
+  </div>
+</div>
+
+<!-- ══════════ CURSOR ══════════ -->
+<div class="cursor" id="cursor" aria-hidden="true">
+  <div class="cursor__dot" id="cursor-dot"></div>
+  <div class="cursor__ring" id="cursor-ring"><span class="cursor__label" id="cursor-label"></span></div>
+</div>
+
+<!-- ══════════ FUNDO 3D ══════════ -->
+<canvas id="scene" aria-hidden="true"></canvas>
+<div class="grain" aria-hidden="true"></div>
+<div class="vignette" aria-hidden="true"></div>
+
+<!-- ══════════ NAV ══════════ -->
+<header class="nav" id="nav">
+  <a href="#top" class="nav__logo" data-cursor="Topo">
+    <span class="nav__logo-mark">TC</span>
+    <span class="nav__logo-text">Thiago&nbsp;Coelho</span>
+  </a>
+
+  <nav class="nav__links" aria-label="Navegação principal">
+    <a href="#projetos" data-nav>Projetos</a>
+    <a href="#stack" data-nav>Stack</a>
+    <a href="#sobre" data-nav>Sobre</a>
+    <a href="#contato" data-nav>Contato</a>
+  </nav>
+
+  <div class="nav__side">
+    <a href="https://github.com/Thiagoolivs" target="_blank" rel="noopener" class="nav__icon" aria-label="GitHub" data-cursor="GitHub">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12 .5C5.73.5.99 5.24.99 11.5c0 4.86 3.15 8.98 7.52 10.43.55.1.75-.24.75-.53v-1.9c-3.06.66-3.71-1.3-3.71-1.3-.5-1.28-1.23-1.62-1.23-1.62-1-.68.08-.67.08-.67 1.1.08 1.69 1.14 1.69 1.14.98 1.69 2.58 1.2 3.21.92.1-.71.39-1.2.7-1.48-2.44-.28-5.01-1.22-5.01-5.45 0-1.2.43-2.19 1.14-2.96-.12-.28-.5-1.4.1-2.92 0 0 .93-.3 3.05 1.13a10.5 10.5 0 0 1 5.55 0c2.12-1.43 3.05-1.13 3.05-1.13.6 1.52.22 2.64.11 2.92.71.77 1.13 1.76 1.13 2.96 0 4.24-2.58 5.17-5.03 5.44.4.34.75 1.01.75 2.04v3.03c0 .3.2.64.76.53A11.02 11.02 0 0 0 23 11.5C23 5.24 18.27.5 12 .5Z"/></svg>
+    </a>
+    <a href="https://www.linkedin.com/in/thiago-coelho-souza/" target="_blank" rel="noopener" class="nav__icon" aria-label="LinkedIn" data-cursor="LinkedIn">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9h4v12H3V9Zm7 0h3.8v1.64h.05c.53-1 1.83-2.06 3.77-2.06 4.03 0 4.78 2.65 4.78 6.1V21h-4v-5.42c0-1.29-.02-2.95-1.8-2.95-1.8 0-2.08 1.4-2.08 2.85V21h-4V9Z"/></svg>
+    </a>
+    <button class="nav__burger" id="burger" aria-label="Abrir menu" aria-expanded="false"><span></span><span></span></button>
+  </div>
+
+  <div class="nav__progress"><span id="nav-progress-fill"></span></div>
+</header>
+
+<!-- ══════════ MENU MOBILE ══════════ -->
+<div class="mobilemenu" id="mobilemenu">
+  <a href="#projetos" data-nav>Projetos</a>
+  <a href="#stack" data-nav>Stack</a>
+  <a href="#sobre" data-nav>Sobre</a>
+  <a href="#contato" data-nav>Contato</a>
+</div>
+
+<main id="top">
+
+  <!-- ══════════ HERO ══════════ -->
+  <section class="hero">
+    <div class="hero__inner">
+      <div class="hero__eyebrow reveal">
+        <span class="dot"></span> Disponível para novos projetos — 2026
+      </div>
+
+      <h1 class="hero__title">
+        <span class="line"><span class="word">Engenharia</span></span>
+        <span class="line"><span class="word outline">de sistemas</span></span>
+        <span class="line"><span class="word">que pensam.</span></span>
+      </h1>
+
+      <p class="hero__desc reveal">
+        Sou <strong>Thiago Coelho</strong>, desenvolvedor Full Stack. Construo plataformas
+        completas — do modelo de dados ao deploy — combinando <strong>Python</strong>,
+        <strong>React</strong> e <strong>IA aplicada</strong> (RAG, LLMs, OCR e ML) para
+        resolver problemas reais de negócio.
+      </p>
+
+      <div class="hero__actions reveal">
+        <a href="#projetos" class="btn btn--primary magnetic" data-cursor="Explorar">
+          <span>Ver os 8 projetos</span>
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+        <a href="mailto:thiago.olivs.coelho@gmail.com" class="btn btn--ghost magnetic" data-cursor="Escrever">Falar comigo</a>
+      </div>
+
+      <dl class="hero__stats reveal">
+        <div><dt>08</dt><dd>Sistemas completos</dd></div>
+        <div><dt>05</dt><dd>Com IA em produção</dd></div>
+        <div><dt>∞</dt><dd>Deploys no Railway</dd></div>
+      </dl>
+    </div>
+
+    <div class="hero__scroll" aria-hidden="true">
+      <span>Role</span><i></i>
+    </div>
+  </section>
+
+  <!-- ══════════ MARQUEE ══════════ -->
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee__track" id="marquee-track"></div>
+  </div>
+
+  <!-- ══════════ PROJETOS ══════════ -->
+  <section id="projetos" class="projects">
+    <div class="projects__head">
+      <span class="section__num">01</span>
+      <h2 class="section__title reveal">Projetos</h2>
+      <p class="section__lead reveal">
+        Oito sistemas reais — cada card abre um dossiê completo com propósito,
+        funcionamento passo a passo, stack e links.
+      </p>
+      <div class="projects__hint reveal" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 12h16M14 6l6 6-6 6"/></svg>
+        Role para navegar horizontalmente · clique no card para o dossiê
+      </div>
+    </div>
+
+    <div class="rail" id="rail">
+      <div class="rail__track" id="rail-track">
+        <!-- cards injetados por assets/js/main.js -->
+      </div>
+    </div>
+
+    <div class="rail__progress" aria-hidden="true"><span id="rail-progress-fill"></span></div>
+  </section>
+
+  <!-- ══════════ STACK ══════════ -->
+  <section id="stack" class="stack">
+    <span class="section__num">02</span>
+    <h2 class="section__title reveal">Stack técnico</h2>
+    <p class="section__lead reveal">
+      Ferramentas que uso no dia a dia — escolhidas por adequação ao problema, não por moda.
+    </p>
+
+    <div class="stack__grid" id="stack-grid">
+      <!-- injetado -->
+    </div>
+  </section>
+
+  <!-- ══════════ SOBRE ══════════ -->
+  <section id="sobre" class="about">
+    <span class="section__num">03</span>
+    <div class="about__grid">
+      <div class="about__col">
+        <h2 class="section__title reveal">Como eu trabalho</h2>
+        <p class="reveal">
+          Meu ponto de partida nunca é a tecnologia — é o gargalo. No
+          <strong>Leitor de Canhotos</strong>, o gargalo eram 12 a 24 horas de
+          conferência manual de papel por lote; a resposta foi OCR com fallback
+          em IA e uma fila de revisão só para o que a máquina não resolveu
+          sozinha. No <strong>ChargeGrid AI</strong>, era um manual técnico em
+          PDF que ninguém lê no meio de um chamado; a resposta foi RAG com
+          índice vetorial local respondendo em menos de um segundo.
+        </p>
+        <p class="reveal">
+          Entrego o ciclo inteiro: modelagem de dados, API, interface,
+          containerização e deploy. Documento tudo em README de verdade, porque
+          um sistema que só o autor consegue subir não está pronto.
+        </p>
+      </div>
+
+      <div class="about__col">
+        <ul class="about__list">
+          <li class="reveal"><span>01</span><div><h4>Do problema ao modelo</h4><p>Entender o processo manual antes de desenhar tabela, rota ou tela.</p></div></li>
+          <li class="reveal"><span>02</span><div><h4>IA onde ela paga a conta</h4><p>LLM como fallback e camada de interpretação — nunca como enfeite.</p></div></li>
+          <li class="reveal"><span>03</span><div><h4>Deploy é parte da entrega</h4><p>Docker, variáveis de ambiente e CI para que subir seja um comando.</p></div></li>
+          <li class="reveal"><span>04</span><div><h4>Degradação graciosa</h4><p>Sem chave de API, sem internet ou com item quebrado, o sistema continua de pé.</p></div></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ CONTATO ══════════ -->
+  <section id="contato" class="contact">
+    <span class="section__num">04</span>
+    <h2 class="contact__title">
+      <span class="line"><span class="word">Vamos construir</span></span>
+      <span class="line"><span class="word outline">algo real.</span></span>
+    </h2>
+
+    <div class="contact__actions reveal">
+      <a href="mailto:thiago.olivs.coelho@gmail.com" class="btn btn--primary magnetic" data-cursor="E-mail">
+        thiago.olivs.coelho@gmail.com
+      </a>
+    </div>
+
+    <div class="contact__links reveal">
+      <a href="https://github.com/Thiagoolivs" target="_blank" rel="noopener" data-cursor="GitHub">GitHub</a>
+      <a href="https://www.linkedin.com/in/thiago-coelho-souza/" target="_blank" rel="noopener" data-cursor="LinkedIn">LinkedIn</a>
+    </div>
+
+    <footer class="footer">
+      <span>© 2026 Thiago de Oliveira Coelho Souza</span>
+      <span class="footer__built">Three.js · GSAP · zero frameworks · hospedado no Railway</span>
+    </footer>
+  </section>
+
+</main>
+
+<!-- ══════════ DOSSIÊ (MODAL) ══════════ -->
+<div class="dossier" id="dossier" role="dialog" aria-modal="true" aria-labelledby="dossier-title" aria-hidden="true">
+  <div class="dossier__backdrop" data-close></div>
+
+  <article class="dossier__panel" id="dossier-panel">
+    <button class="dossier__close" data-close aria-label="Fechar dossiê" data-cursor="Fechar">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+    <div class="dossier__scroll" id="dossier-scroll"><!-- injetado --></div>
+  </article>
+</div>
+
+<noscript>
+  <div class="noscript">
+    Este portfólio usa JavaScript para as interações 3D e para carregar os projetos.
+    O código-fonte de todos eles está em
+    <a href="https://github.com/Thiagoolivs">github.com/Thiagoolivs</a>.
+  </div>
+</noscript>
+
+<!-- Bibliotecas servidas localmente: sem dependência de CDN, sem quebrar offline -->
+<script src="assets/vendor/three.min.js"></script>
+<script src="assets/vendor/gsap.min.js"></script>
+<script src="assets/vendor/ScrollTrigger.min.js"></script>
+<script src="assets/js/projects.js"></script>
+<script src="assets/js/scene.js"></script>
+<script src="assets/js/main.js"></script>
+</body>
+</html>
