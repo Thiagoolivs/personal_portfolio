@@ -1,0 +1,16 @@
+{
+  "name": "thiago-coelho-portfolio",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Portfólio pessoal de Thiago de Oliveira Coelho Souza — Full Stack & IA",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "author": "Thiago de Oliveira Coelho Souza",
+  "license": "UNLICENSED"
+}
