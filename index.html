@@ -19,7 +19,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
 <link rel="stylesheet" href="assets/css/style.css">
 </head>
@@ -110,6 +110,11 @@
         <a href="mailto:thiago.olivs.coelho@gmail.com" class="btn btn--ghost magnetic" data-cursor="Escrever">Falar comigo</a>
       </div>
 
+      <p class="hero__hint reveal" aria-hidden="true">
+        <span class="hero__hint-key">arraste</span> para girar o notebook ·
+        <span class="hero__hint-key">clique</span> para trocar o código
+      </p>
+
       <dl class="hero__stats reveal">
         <div><dt>08</dt><dd>Sistemas completos</dd></div>
         <div><dt>05</dt><dd>Com IA em produção</dd></div>
@@ -137,18 +142,14 @@
         funcionamento passo a passo, stack e links.
       </p>
       <div class="projects__hint reveal" aria-hidden="true">
-        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 12h16M14 6l6 6-6 6"/></svg>
-        Role para navegar horizontalmente · clique no card para o dossiê
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 5h10M9 12h10M9 19h10M4 5h.01M4 12h.01M4 19h.01"/></svg>
+        Clique em um card para abrir o dossiê completo
       </div>
     </div>
 
-    <div class="rail" id="rail">
-      <div class="rail__track" id="rail-track">
-        <!-- cards injetados por assets/js/main.js -->
-      </div>
+    <div class="projects__grid" id="projects-grid">
+      <!-- cards injetados por assets/js/main.js -->
     </div>
-
-    <div class="rail__progress" aria-hidden="true"><span id="rail-progress-fill"></span></div>
   </section>
 
   <!-- ══════════ STACK ══════════ -->

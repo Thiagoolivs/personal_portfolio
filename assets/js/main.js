@@ -198,7 +198,7 @@
      CARDS
      ======================================================================== */
   (function renderCards() {
-    const track = $('#rail-track');
+    const track = $('#projects-grid');
     if (!track || typeof PROJECTS === 'undefined') return;
 
     track.innerHTML = PROJECTS.map(function (p, i) {
@@ -308,7 +308,18 @@
         '<p class="d-tagline">' + esc(p.tagline) + '</p>' +
       '</header>' +
 
-      '<div class="d-media">' + mediaMarkup(p, true) + '</div>' +
+      /* Duas colunas: mídia à esquerda (fixa enquanto o texto rola),
+         dossiê à direita. Vira coluna única em telas estreitas. */
+      '<div class="d-grid">' +
+
+      '<aside class="d-grid__media">' +
+        '<div class="d-media">' + mediaMarkup(p, true) + '</div>' +
+        /* Os links acompanham a mídia: repositório e demo ficam sempre à vista
+           enquanto o dossiê é lido na coluna da direita. */
+        '<div class="d-links">' + links + '</div>' +
+      '</aside>' +
+
+      '<div class="d-grid__content">' +
 
       '<section class="d-section">' +
         '<div class="d-section__label">Propósito</div>' +
@@ -338,10 +349,8 @@
         }).join('') + '</div>' +
       '</section>' +
 
-      '<section class="d-section">' +
-        '<div class="d-section__label">Links</div>' +
-        '<div class="d-links">' + links + '</div>' +
-      '</section>' +
+      '</div>' +   /* /.d-grid__content */
+      '</div>' +   /* /.d-grid */
 
       '<nav class="d-nav">' +
         '<button data-go="prev"' + (i === 0 ? ' disabled' : '') + '>← ' +
@@ -461,58 +470,14 @@
       });
     });
 
-    // trilho horizontal — só no desktop; no mobile os cards empilham
-    const mm = gsap.matchMedia();
-    mm.add('(min-width: 761px)', function () {
-      const track = $('#rail-track');
-      const wrap = $('#rail');
-      const section = $('#projetos');
-      const fill = $('#rail-progress-fill');
-      if (!track || !wrap || !section) return;
-
-      const distance = function () {
-        return Math.max(track.scrollWidth - window.innerWidth + 40, 0);
-      };
-
-      // Pina a SEÇÃO inteira (não só o trilho): o pin-spacer precisa viver no
-      // fluxo normal do documento, senão as seções seguintes sobrepõem o pin.
-      const tween = gsap.to(track, {
-        x: function () { return -distance(); },
-        ease: 'none',
-        scrollTrigger: {
-          trigger: section,
-          start: 'top top',
-          pin: section,
-          anticipatePin: 1,
-          scrub: 0.8,
-          invalidateOnRefresh: true,
-          end: function () { return '+=' + distance(); },
-          onUpdate: function (self) {
-            if (fill) fill.style.width = (self.progress * 100).toFixed(2) + '%';
-          }
-        }
-      });
-
-      // entrada escalonada dos cards quando a seção entra em cena
-      gsap.from('.card', {
-        y: 60, opacity: 0, duration: 0.8, stagger: 0.08, ease: 'power3.out',
-        scrollTrigger: { trigger: section, start: 'top 55%' }
-      });
-
-      return function () { tween.scrollTrigger && tween.scrollTrigger.kill(); tween.kill(); };
+    // cards da grade entram escalonados, por linha
+    gsap.from('.card', {
+      y: 46, opacity: 0, duration: 0.75, ease: 'power3.out',
+      stagger: { each: 0.07, from: 'start' },
+      scrollTrigger: { trigger: '#projects-grid', start: 'top 80%' }
     });
 
-    mm.add('(max-width: 760px)', function () {
-      gsap.set('#rail-track', { clearProps: 'transform' });
-      $$('.card').forEach(function (c) {
-        gsap.from(c, {
-          y: 40, opacity: 0, duration: 0.7, ease: 'power3.out',
-          scrollTrigger: { trigger: c, start: 'top 90%' }
-        });
-      });
-    });
-
-    // recalcula quando as fontes carregam (evita pin com altura errada)
+    // recalcula quando as fontes carregam (evita gatilhos em posição errada)
     if (document.fonts && document.fonts.ready) {
       document.fonts.ready.then(function () { ScrollTrigger.refresh(); });
     }
