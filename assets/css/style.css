@@ -20,8 +20,8 @@
   --amber:         #f59e0b;
   --accent:        var(--cyan);
 
-  --font-display:  'Syncopate', sans-serif;
-  --font-body:     'Space Grotesk', system-ui, sans-serif;
+  --font-display:  'Inter', system-ui, -apple-system, sans-serif;
+  --font-body:     'Inter', system-ui, -apple-system, sans-serif;
   --font-mono:     'JetBrains Mono', ui-monospace, monospace;
 
   --ease:          cubic-bezier(.22,1,.36,1);
@@ -210,7 +210,8 @@ main{ position:relative; z-index:2; }
 }
 .mobilemenu.is-open{ opacity:1; visibility:visible; }
 .mobilemenu a{
-  font-family:var(--font-display); font-size:clamp(1.6rem,8vw,2.6rem);
+  font-family:var(--font-display); font-weight:600; letter-spacing:-.03em;
+  font-size:clamp(1.6rem,8vw,2.6rem);
   padding:.5rem 0; border-bottom:1px solid var(--line);
   transform:translateY(18px); opacity:0; transition:all .5s var(--ease);
 }
@@ -228,9 +229,9 @@ main{ position:relative; z-index:2; }
 }
 .section__num::before{ content:'— '; }
 .section__title{
-  font-family:var(--font-display); font-weight:700;
-  font-size:clamp(1.9rem,5.5vw,3.6rem); line-height:1.08;
-  letter-spacing:-.01em; margin-bottom:1rem;
+  font-family:var(--font-display); font-weight:600;
+  font-size:clamp(1.8rem,4.6vw,3.1rem); line-height:1.1;
+  letter-spacing:-.03em; margin-bottom:1rem;
 }
 .section__lead{
   max-width:56ch; color:var(--text-dim);
@@ -282,9 +283,9 @@ main{ position:relative; z-index:2; }
 @keyframes pulse{ 70%{ box-shadow:0 0 0 9px rgba(52,211,153,0) } 100%{ box-shadow:0 0 0 0 rgba(52,211,153,0) } }
 
 .hero__title{
-  font-family:var(--font-display); font-weight:700;
-  font-size:clamp(2.1rem,7.6vw,6.6rem); line-height:1.02;
-  letter-spacing:-.02em; margin-bottom:2rem;
+  font-family:var(--font-display); font-weight:600;
+  font-size:clamp(2.4rem,6.6vw,5.6rem); line-height:1.04;
+  letter-spacing:-.042em; margin-bottom:2rem;
 }
 .hero__desc{
   max-width:60ch; color:var(--text-dim);
@@ -294,13 +295,28 @@ main{ position:relative; z-index:2; }
 
 .hero__actions{ display:flex; flex-wrap:wrap; gap:1rem; margin-top:2.6rem; }
 
+.hero__hint{
+  margin-top:2.2rem; font-family:var(--font-mono); font-size:.66rem;
+  letter-spacing:.08em; text-transform:uppercase; color:var(--text-faint);
+}
+.hero__hint-key{
+  color:var(--text-dim); border-bottom:1px solid var(--line-strong); padding-bottom:1px;
+}
+body.is-dragging-3d{ user-select:none; -webkit-user-select:none; }
+
+/* Em telas de toque o arraste do notebook fica desligado (o gesto é rolagem),
+   então a dica também sai. */
+@media (hover:none), (pointer:coarse){
+  .hero__hint{ display:none; }
+}
+
 .hero__stats{
   display:flex; flex-wrap:wrap; gap:clamp(1.6rem,5vw,4rem);
   margin-top:4rem; padding-top:2rem; border-top:1px solid var(--line);
 }
 .hero__stats dt{
-  font-family:var(--font-display); font-size:clamp(1.5rem,3.4vw,2.4rem);
-  font-weight:700; color:var(--cyan); line-height:1;
+  font-family:var(--font-display); font-size:clamp(1.5rem,3.4vw,2.3rem);
+  font-weight:600; letter-spacing:-.03em; color:var(--cyan); line-height:1;
 }
 .hero__stats dd{
   font-family:var(--font-mono); font-size:.66rem; letter-spacing:.14em;
@@ -336,18 +352,29 @@ main{ position:relative; z-index:2; }
 @keyframes scroll-x{ to{ transform:translateX(-50%) } }
 
 /* ============================================================================
-   PROJETOS — trilho horizontal
+   PROJETOS — grade
    ========================================================================== */
-.projects{ padding:clamp(5rem,12vh,9rem) 0 0; }
-.projects__head{ padding:0 var(--pad); max-width:1200px; }
-.projects__head .section__title{ font-size:clamp(1.8rem,4.4vw,3rem); }
+.projects{ padding:clamp(5rem,12vh,9rem) var(--pad); max-width:1500px; margin-inline:auto; }
+.projects__head{ max-width:1200px; }
+.projects__hint{
+  display:inline-flex; align-items:center; gap:.55rem; margin-top:1.6rem;
+  font-family:var(--font-mono); font-size:.66rem; letter-spacing:.1em;
+  text-transform:uppercase; color:var(--text-faint);
+}
+.projects__hint svg{ color:var(--cyan); }
+
+.projects__grid{
+  display:grid; gap:clamp(1rem,1.8vw,1.6rem);
+  grid-template-columns:repeat(auto-fill,minmax(310px,1fr));
+  margin-top:clamp(2.5rem,5vh,3.5rem);
+}
 
 /* Card --------------------------------------------------------------------- */
 .card{
   --card-accent:var(--cyan);
   position:relative; display:flex; flex-direction:column;
-  width:clamp(280px,31vw,400px); min-height:clamp(430px,62vh,560px);
-  padding:1.6rem; text-align:left;
+  width:100%; min-height:clamp(400px,52vh,470px);
+  padding:1.5rem; text-align:left;
   border:1px solid var(--line); border-radius:var(--radius);
   background:linear-gradient(160deg, rgba(255,255,255,.045), rgba(255,255,255,.012));
   backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px);
@@ -365,8 +392,8 @@ main{ position:relative; z-index:2; }
 
 .card__top{ display:flex; align-items:flex-start; justify-content:space-between; gap:1rem; }
 .card__index{
-  font-family:var(--font-display); font-size:2.6rem; font-weight:700;
-  line-height:1; color:rgba(255,255,255,.09);
+  font-family:var(--font-display); font-size:2.2rem; font-weight:700;
+  line-height:1; letter-spacing:-.03em; color:rgba(255,255,255,.09);
   transition:color .45s;
 }
 .card:hover .card__index{ color:color-mix(in srgb, var(--card-accent) 32%, transparent); }
@@ -384,7 +411,7 @@ main{ position:relative; z-index:2; }
 
 /* Slot de mídia (GIF) ------------------------------------------------------- */
 .card__media{
-  position:relative; margin:1.3rem 0; aspect-ratio:16/10;
+  position:relative; margin:1.2rem 0; aspect-ratio:16/10;
   border-radius:12px; overflow:hidden;
   border:1px solid var(--line); background:rgba(0,0,0,.35);
 }
@@ -414,15 +441,15 @@ main{ position:relative; z-index:2; }
 
 .card__body{ display:flex; flex-direction:column; flex:1; }
 .card__name{
-  font-family:var(--font-display); font-size:1.32rem; font-weight:700;
-  letter-spacing:-.01em; margin-bottom:.55rem;
+  font-family:var(--font-display); font-size:1.2rem; font-weight:600;
+  letter-spacing:-.015em; margin-bottom:.5rem;
 }
 .card__tagline{
   color:var(--text-dim); font-size:.9rem; line-height:1.55;
   display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden;
 }
 
-.card__chips{ display:flex; flex-wrap:wrap; gap:.35rem; margin-top:1.1rem; }
+.card__chips{ display:flex; flex-wrap:wrap; gap:.35rem; margin-top:1rem; }
 .chip{
   padding:.28rem .6rem; border:1px solid var(--line); border-radius:6px;
   font-family:var(--font-mono); font-size:.6rem; color:var(--text-dim);
@@ -432,7 +459,7 @@ main{ position:relative; z-index:2; }
 
 .card__foot{
   display:flex; align-items:center; justify-content:space-between; gap:1rem;
-  margin-top:auto; padding-top:1.2rem; border-top:1px solid var(--line);
+  margin-top:auto; padding-top:1.1rem; border-top:1px solid var(--line);
   font-family:var(--font-mono); font-size:.64rem;
   letter-spacing:.12em; text-transform:uppercase; color:var(--text-dim);
 }
@@ -444,64 +471,6 @@ main{ position:relative; z-index:2; }
 .card:hover .card__foot .arrow{
   transform:translateX(4px);
   background:var(--card-accent); border-color:var(--card-accent); color:#05060a;
-}
-
-/* Quando a seção é fixada (pin), ela precisa caber inteira em uma tela:
-   cabeçalho compacto no topo e o trilho ocupando a altura restante. */
-@media (min-width:761px){
-  .projects{
-    height:100svh; display:flex; flex-direction:column;
-    padding:clamp(4.5rem,9vh,6.5rem) 0 clamp(1.5rem,3.5vh,2.5rem);
-  }
-  .projects__head{ flex:0 0 auto; }
-  .projects__head .section__lead{ font-size:1rem; max-width:52ch; }
-  .projects__hint{ margin-top:1rem; }
-  .rail{ flex:1 1 auto; display:flex; align-items:stretch; margin-top:1.2rem; min-height:0; overflow:hidden; }
-  .rail__track{ padding-block:0; height:100%; align-items:stretch; }
-
-  /* Os cards preenchem exatamente a altura livre da seção fixada, e o slot de
-     mídia absorve a folga — o rodapé nunca é cortado, em nenhuma altura de tela. */
-  .card{ height:auto; min-height:0; max-height:100%; }
-  .card__media{ flex:1 1 auto; aspect-ratio:auto; min-height:60px; margin:1rem 0; }
-  .card__body{ flex:0 0 auto; }
-  .card__tagline{ -webkit-line-clamp:2; }
-}
-
-/* Telas baixas (notebooks 768p): cabeçalho e cards compactos, para que o
-   rodapé "Ver dossiê" continue dentro da tela mesmo em 720px de altura. */
-@media (min-width:761px) and (max-height:860px){
-  .projects{ padding-top:4.5rem; }
-  .projects__head .section__title{ font-size:1.8rem; margin-bottom:.6rem; }
-  .projects__head .section__lead{ font-size:.92rem; }
-  .projects__hint{ display:none; }
-  .rail{ margin-top:.8rem; }
-  .card{ padding:1.25rem; }
-  .card__index{ font-size:2rem; }
-  .card__media{ margin:.85rem 0; }
-  .card__name{ font-size:1.15rem; margin-bottom:.4rem; }
-  .card__tagline{ font-size:.85rem; }
-  .card__chips{ margin-top:.75rem; }
-  .card__foot{ padding-top:.85rem; }
-}
-.projects__hint{
-  display:inline-flex; align-items:center; gap:.55rem; margin-top:1.6rem;
-  font-family:var(--font-mono); font-size:.66rem; letter-spacing:.1em;
-  text-transform:uppercase; color:var(--text-faint);
-}
-.projects__hint svg{ color:var(--cyan); }
-
-.rail{ margin-top:3rem; overflow:hidden; }
-.rail__track{
-  display:flex; gap:clamp(1rem,2vw,1.8rem);
-  padding:1rem var(--pad) 2rem; width:max-content; align-items:stretch;
-}
-
-.rail__progress{
-  height:1px; margin:0 var(--pad) 0; background:var(--line);
-}
-.rail__progress span{
-  display:block; height:100%; width:0%;
-  background:linear-gradient(90deg,var(--cyan),var(--violet));
 }
 
 /* ============================================================================
@@ -570,8 +539,8 @@ main{ position:relative; z-index:2; }
   padding:clamp(4rem,12vh,8rem) var(--pad) 0; text-align:center; align-items:center;
 }
 .contact__title{
-  font-family:var(--font-display); font-weight:700;
-  font-size:clamp(1.9rem,7.5vw,5.4rem); line-height:1.06; letter-spacing:-.02em;
+  font-family:var(--font-display); font-weight:600;
+  font-size:clamp(2rem,6.4vw,4.8rem); line-height:1.06; letter-spacing:-.04em;
   margin-bottom:2.6rem;
 }
 .contact__actions{ margin-bottom:2.4rem; }
@@ -635,9 +604,9 @@ main{ position:relative; z-index:2; }
 }
 .d-meta .card__status{ font-size:.58rem; }
 .d-title{
-  font-family:var(--font-display); font-weight:700;
-  font-size:clamp(1.6rem,4.6vw,2.7rem); line-height:1.08;
-  letter-spacing:-.02em; margin-bottom:.7rem;
+  font-family:var(--font-display); font-weight:600;
+  font-size:clamp(1.6rem,4.2vw,2.5rem); line-height:1.1;
+  letter-spacing:-.035em; margin-bottom:.7rem;
 }
 .d-tagline{ color:var(--text-dim); font-size:1.02rem; max-width:52ch; }
 
@@ -756,16 +725,25 @@ main{ position:relative; z-index:2; }
 }
 
 @media (max-width:760px){
-  .rail{ overflow:visible; }
-  .rail__track{
-    flex-direction:column; width:100%; padding-inline:var(--pad);
-    gap:1.2rem;
-  }
-  .card{ width:100%; min-height:0; }
-  .rail__progress{ display:none; }
-  .projects__hint{ display:none; }
+  .projects__grid{ grid-template-columns:1fr; }
+  .card{ min-height:0; }
   .hero__scroll{ display:none; }
-  .hero__stats{ gap:1.6rem 2.4rem; }
+  .hero__hint{
+  margin-top:2.2rem; font-family:var(--font-mono); font-size:.66rem;
+  letter-spacing:.08em; text-transform:uppercase; color:var(--text-faint);
+}
+.hero__hint-key{
+  color:var(--text-dim); border-bottom:1px solid var(--line-strong); padding-bottom:1px;
+}
+body.is-dragging-3d{ user-select:none; -webkit-user-select:none; }
+
+/* Em telas de toque o arraste do notebook fica desligado (o gesto é rolagem),
+   então a dica também sai. */
+@media (hover:none), (pointer:coarse){
+  .hero__hint{ display:none; }
+}
+
+.hero__stats{ gap:1.6rem 2.4rem; }
   .footer{ justify-content:center; text-align:center; }
 }
 

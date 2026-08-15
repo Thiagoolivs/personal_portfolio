@@ -1,8 +1,9 @@
 # Portfólio — Thiago de Oliveira Coelho Souza
 
-Portfólio pessoal com fundo 3D interativo (WebGL), trilho horizontal de projetos
-e um dossiê completo por sistema: propósito, funcionamento passo a passo, stack e
-links. Sem framework, sem build, sem dependências de runtime.
+Portfólio pessoal com um MacBook 3D interativo (WebGL) digitando código dos
+projetos reais, grade de projetos e um dossiê completo por sistema: propósito,
+funcionamento passo a passo, stack e links. Sem framework, sem build, sem
+dependências de runtime.
 
 **Stack:** HTML · CSS · JavaScript (vanilla) · Three.js · GSAP/ScrollTrigger · Node.js
 
@@ -47,7 +48,7 @@ personal_portfolio/
     ├── css/style.css          # sistema de design completo
     ├── js/
     │   ├── projects.js        # ← DADOS dos projetos (edite aqui)
-    │   ├── scene.js           # cena 3D (Three.js + shaders próprios)
+    │   ├── scene.js           # MacBook 3D + código digitado (SNIPPETS)
     │   └── main.js            # cursor, nav, cards, dossiê, animações
     ├── media/                 # GIFs das demos (veja o README de lá)
     └── vendor/                # three.min.js, gsap.min.js, ScrollTrigger.min.js
@@ -86,6 +87,9 @@ Praticamente tudo vive em **`assets/js/projects.js`**:
 | Seção "Stack técnico"             | `STACK_GROUPS`                        |
 | Faixa rolante do topo             | `MARQUEE_WORDS`                       |
 
+Os trechos de código que aparecem na tela do MacBook ficam em `assets/js/scene.js`,
+no array `SNIPPETS` (cada item tem `file`, `lang` e `code`).
+
 Cabeçalho, textos do "Como eu trabalho" e contato ficam em `index.html`.
 
 Cada projeto tem link direto: `.../#p-<slug>` abre o site já com o dossiê aberto
@@ -95,15 +99,19 @@ Cada projeto tem link direto: `.../#p-<slug>` abre o site já com o dossiê aber
 
 ## Detalhes de implementação
 
-- **Cena 3D**: campo de ~7.000 partículas com `ShaderMaterial` próprio (swirl,
-  atenuação por profundidade, gradiente ciano→violeta), núcleo icosaédrico com
-  deslocamento de vértices e anéis orbitais. A cena assume a cor do projeto sob
-  o cursor.
+- **Cena 3D**: MacBook modelado com primitivas (chassi, deck com teclado e
+  trackpad desenhados em canvas, dobradiça e tela). A tela é uma `CanvasTexture`
+  redesenhada conforme o código é digitado, com realce de sintaxe e cursor
+  piscando — os trechos vêm dos projetos reais. Arrastar gira o notebook,
+  clicar troca o trecho, a roda dá zoom e a tampa fecha conforme a página desce.
+  Ao sair do hero o notebook some, para não competir com os cards.
 - **Degradação graciosa**: sem WebGL, sem GSAP ou com
   `prefers-reduced-motion`, o site continua legível e navegável — o fundo vira
   gradiente estático e as animações são desligadas.
-- **Performance**: `pixelRatio` limitado a 2, contagem de partículas reduzida no
-  mobile e loop de render pausado quando a aba perde o foco.
+- **Performance**: `pixelRatio` limitado a 2, tela do notebook redesenhada só
+  quando o texto muda (não a cada frame) e loop de render pausado quando a aba
+  perde o foco. No celular o notebook recua e o arraste é desligado, para o
+  gesto continuar sendo rolagem.
 - **Acessibilidade**: cards operáveis por teclado, dossiê com foco preso,
   fechamento por `Esc`, navegação entre projetos por `←`/`→` e `aria-*`
   coerentes.
