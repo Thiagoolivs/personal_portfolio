@@ -308,7 +308,18 @@
         '<p class="d-tagline">' + esc(p.tagline) + '</p>' +
       '</header>' +
 
-      '<div class="d-media">' + mediaMarkup(p, true) + '</div>' +
+      /* Duas colunas: mídia à esquerda (fixa enquanto o texto rola),
+         dossiê à direita. Vira coluna única em telas estreitas. */
+      '<div class="d-grid">' +
+
+      '<aside class="d-grid__media">' +
+        '<div class="d-media">' + mediaMarkup(p, true) + '</div>' +
+        /* Os links acompanham a mídia: repositório e demo ficam sempre à vista
+           enquanto o dossiê é lido na coluna da direita. */
+        '<div class="d-links">' + links + '</div>' +
+      '</aside>' +
+
+      '<div class="d-grid__content">' +
 
       '<section class="d-section">' +
         '<div class="d-section__label">Propósito</div>' +
@@ -338,10 +349,8 @@
         }).join('') + '</div>' +
       '</section>' +
 
-      '<section class="d-section">' +
-        '<div class="d-section__label">Links</div>' +
-        '<div class="d-links">' + links + '</div>' +
-      '</section>' +
+      '</div>' +   /* /.d-grid__content */
+      '</div>' +   /* /.d-grid */
 
       '<nav class="d-nav">' +
         '<button data-go="prev"' + (i === 0 ? ' disabled' : '') + '>← ' +

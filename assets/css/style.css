@@ -608,7 +608,7 @@ main{ position:relative; z-index:2; }
 }
 .dossier__panel{
   position:absolute; top:0; right:0; height:100%;
-  width:min(760px,100%);
+  width:min(1180px,100%);
   background:var(--bg-soft); border-left:1px solid var(--line);
   transform:translateX(100%); transition:transform .6s var(--ease);
   display:flex; flex-direction:column;
@@ -647,6 +647,26 @@ main{ position:relative; z-index:2; }
   background:rgba(0,0,0,.35);
 }
 .d-media img,.d-media video{ width:100%; height:100%; object-fit:cover; }
+
+/* Duas colunas: mídia à esquerda (acompanha a rolagem), dossiê à direita */
+.d-grid{
+  display:grid;
+  grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr);
+  gap:clamp(1.6rem,3vw,2.8rem);
+  align-items:start;
+}
+.d-grid__media{ position:sticky; top:.25rem; }
+.d-grid__media .d-media{ margin-bottom:1.2rem; }
+.d-grid__media .d-links{ margin-top:0; }
+.d-grid__content > .d-section:last-child{ margin-bottom:0; }
+
+/* Coluna única quando o painel fica estreito demais para duas */
+@media (max-width:900px){
+  .d-grid{ grid-template-columns:1fr; gap:0; }
+  .d-grid__media{ position:static; }
+  .d-grid__media .d-media{ margin-bottom:1.4rem; }
+  .d-grid__media .d-links{ margin-bottom:2.2rem; }
+}
 
 .d-section{ margin-bottom:2.4rem; }
 .d-section__label{
